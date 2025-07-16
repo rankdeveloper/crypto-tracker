@@ -13,3 +13,11 @@ const LoadingSpinner: React.FC = () => {
 };
 
 export default LoadingSpinner;
+
+export function ErrorComponent({ isError }: { isError: any }) {
+  return (
+    <div className="bg-red-900/20 border border-red-500 text-red-300 px-6 py-4 rounded-lg mb-6">
+      {isError}
+    </div>
+  );
+}
