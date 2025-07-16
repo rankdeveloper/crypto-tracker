@@ -1,4 +1,6 @@
-export const parentVariants = {
+import type { Variants } from "framer-motion";
+
+export const parentVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -13,7 +15,7 @@ export const parentVariants = {
   },
 };
 
-export const childVariants = {
+export const childVariants: Variants = {
   hidden: { opacity: 0, x: -20 },
   visible: { opacity: 1, x: 0 },
 };
