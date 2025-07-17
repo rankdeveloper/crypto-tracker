@@ -24,6 +24,18 @@ A full-stack cryptocurrency tracking application built with **React.js**, **Node
 
 ---
 
+## 📂 Screenshot my  of my database
+### 1. Coins collection
+![coins](https://github.com/user-attachments/assets/104c7b8f-d17e-43ca-a693-7f9324ba391a)
+
+### 2. History collection
+![history](https://github.com/user-attachments/assets/58c9706b-2532-4599-ad77-0df7254d9017)
+
+## 📂 Screenshot my  cron job setup
+
+![Screenshot 2025-07-17 124912](https://github.com/user-attachments/assets/8e153b1a-a5b4-4f81-bccc-32060d126a67)
+
+
 ## 📂 Installation & Setup  
 
 ### 1. Clone the repository  
