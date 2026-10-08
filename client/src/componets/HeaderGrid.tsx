@@ -6,6 +6,7 @@ type HeaderProps = {
   gainers: number;
   losers: number;
 };
+
 export default function HeaderGrid({
   totalMarketCap,
   gainers,
@@ -15,50 +16,54 @@ export default function HeaderGrid({
     <motion.div
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{
-        delay: 1,
-        duration: 1,
-        type: "keyframes",
-        stiffness: 100,
-      }}
-      className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-3 md:mb-4"
+      transition={{ delay: 0.8, duration: 0.7 }}
+      className="grid grid-cols-1 gap-4 md:grid-cols-3"
     >
-      <div className="bg-slate-800/50 backdrop-blur-lg rounded-xl p-6 border border-slate-700 ">
-        <div className="flex items-center justify-between">
+      <div className="rounded-2xl border border-violet-500/20 bg-gradient-to-br from-slate-900 via-slate-900 to-violet-950/40 p-5 shadow-lg shadow-violet-950/20">
+        <div className="flex items-center justify-between gap-4">
           <div>
-            <p className="text-gray-400 text-sm">Total Market Cap</p>
-            <p className="text-2xl font-bold text-white">
-              {" "}
+            <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">
+              Total Market Cap
+            </p>
+            <p className="mt-2 text-2xl font-bold text-white">
               $
               {totalMarketCap.toLocaleString(undefined, {
                 maximumFractionDigits: 0,
               })}
             </p>
           </div>
-          <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center">
-            <BarChart3 className="w-6 h-6 text-purple-400" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-violet-500/15 text-violet-300 ring-1 ring-inset ring-violet-500/30">
+            <BarChart3 className="h-6 w-6" />
           </div>
         </div>
       </div>
-      <div className="bg-slate-800/50 backdrop-blur-lg rounded-xl p-6 border border-slate-700">
-        <div className="flex items-center justify-between">
+
+      <div className="rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-slate-900 via-slate-900 to-emerald-950/30 p-5 shadow-lg shadow-emerald-950/20">
+        <div className="flex items-center justify-between gap-4">
           <div>
-            <p className="text-gray-400 text-sm">24h Gainers</p>
-            <p className="text-2xl font-bold text-green-400">{gainers}</p>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">
+              24h Gainers
+            </p>
+            <p className="mt-2 text-2xl font-bold text-emerald-400">
+              {gainers}
+            </p>
           </div>
-          <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
-            <TrendingUp className="w-6 h-6 text-green-400" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-300 ring-1 ring-inset ring-emerald-500/30">
+            <TrendingUp className="h-6 w-6" />
           </div>
         </div>
       </div>
-      <div className="bg-slate-800/50 backdrop-blur-lg rounded-xl p-6 border border-slate-700">
-        <div className="flex items-center justify-between">
+
+      <div className="rounded-2xl border border-rose-500/20 bg-gradient-to-br from-slate-900 via-slate-900 to-rose-950/30 p-5 shadow-lg shadow-rose-950/20">
+        <div className="flex items-center justify-between gap-4">
           <div>
-            <p className="text-gray-400 text-sm">24h Losers</p>
-            <p className="text-2xl font-bold text-red-400">{losers}</p>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">
+              24h Losers
+            </p>
+            <p className="mt-2 text-2xl font-bold text-rose-400">{losers}</p>
           </div>
-          <div className="w-12 h-12 bg-red-500/20 rounded-lg flex items-center justify-center">
-            <TrendingDown className="w-6 h-6 text-red-400" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-rose-500/15 text-rose-300 ring-1 ring-inset ring-rose-500/30">
+            <TrendingDown className="h-6 w-6" />
           </div>
         </div>
       </div>

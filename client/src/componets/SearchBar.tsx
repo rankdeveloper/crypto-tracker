@@ -11,16 +11,16 @@ const SearchBar: React.FC<SearchBarProps> = ({
   onSearchChange,
 }) => {
   return (
-    <div className="relative flex-1 min-w-0">
-      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-        <Search className="w-5 h-5 text-gray-400" />
+    <div className="relative w-full">
+      <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+        <Search className="h-4 w-4 text-slate-400" />
       </div>
       <input
         type="text"
         placeholder="Search cryptocurrencies..."
         value={searchTerm}
         onChange={(e) => onSearchChange(e.target.value)}
-        className="w-full pl-10 pr-4 py-3 bg-slate-800/50 backdrop-blur-lg border border-slate-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+        className="w-full rounded-xl border border-slate-700 bg-slate-950/60 py-3.5 pl-11 pr-4 text-sm text-white placeholder:text-slate-400 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/30"
       />
     </div>
   );

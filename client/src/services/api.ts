@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const API_BASE_URL = "http://localhost:5000/api";
-const API_BASE_URL = "https://fso4k8kckco4sw44w04w0ccw.coolify.probir.dev/api";
+const API_BASE_URL = "https://crypto-tracker-yp1o.onrender.com/api";
 
 export interface CryptoResponse {
   success: boolean;
@@ -38,7 +38,7 @@ export interface HistoryResponse {
 
 export const fetchCryptoData = async (): Promise<CryptoResponse> => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/coins/current`);
+    const response = await axios.get(`${API_BASE_URL}/coins`);
     return response.data;
   } catch (error) {
     console.error("Error fetching crypto data:", error);
@@ -68,7 +68,7 @@ export const saveToHistory = async (): Promise<{
         headers: {
           "Content-Type": "application/json",
         },
-      }
+      },
     );
     return response.data;
   } catch (error) {
@@ -79,7 +79,7 @@ export const saveToHistory = async (): Promise<{
 
 export const fetchCoinHistory = async (
   coinId: string,
-  days: number = 7
+  days: number = 7,
 ): Promise<HistoryResponse> => {
   try {
     const response = await axios.get(`${API_BASE_URL}/history/${coinId}`, {
@@ -93,7 +93,7 @@ export const fetchCoinHistory = async (
 };
 
 export const fetchAllHistory = async (
-  limit: number = 100
+  limit: number = 100,
 ): Promise<HistoryResponse> => {
   try {
     const response = await axios.get(`${API_BASE_URL}/history`, {

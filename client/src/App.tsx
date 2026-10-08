@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { RefreshCw } from "lucide-react";
 import SearchBar from "./componets/SearchBar";
 import FilterSort from "./componets/FilterSort";
@@ -23,6 +23,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("rank");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["crypto"],
@@ -30,6 +31,17 @@ function App() {
     gcTime: 5 * 60 * 1000,
     refetchInterval: 30 * 60 * 1000,
   });
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 12);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     if (data) {
@@ -43,7 +55,7 @@ function App() {
     let filtered = cryptoData.filter(
       (coin) =>
         coin.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        coin.symbol.toLowerCase().includes(searchTerm.toLowerCase())
+        coin.symbol.toLowerCase().includes(searchTerm.toLowerCase()),
     );
 
     filtered = [...filtered].sort((a, b) => {
@@ -67,89 +79,105 @@ function App() {
 
   const totalMarketCap = filteredData.reduce(
     (sum, coin) => sum + coin.marketCap,
-    0
+    0,
   );
   const gainers = filteredData.filter((coin) => coin.priceChange24h > 0).length;
   const losers = filteredData.filter((coin) => coin.priceChange24h < 0).length;
 
-  return (
-    <>
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex flex-col no-scrollbar ">
-        <div className="sm:sticky top-0 z-10 filter backdrop-blur-md px-4 py-3 shadow-lg">
-          <div className="container mx-auto">
-            <Header />
+  const shellStyle = {
+    "--header-offset": isScrolled ? "15rem" : "21rem",
+  } as CSSProperties;
 
-            <HeaderGrid
-              totalMarketCap={totalMarketCap}
-              gainers={gainers}
-              losers={losers}
-            />
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: 1,
-                duration: 1,
-                type: "keyframes",
-                stiffness: 100,
-              }}
-              className="flex flex-col lg:flex-row gap-3 lg:gap-2 mb-1 lg:mb-2 sticky sm:relative top-0 z-10"
-            >
-              <SearchBar
-                searchTerm={searchTerm}
-                onSearchChange={setSearchTerm}
-              />
-              <FilterSort
-                sortBy={sortBy}
-                sortOrder={sortOrder}
-                onSortChange={setSortBy}
-                onOrderChange={setSortOrder}
-              />
-              <button className="bg-purple-600 hover:bg-purple-700 disabled:bg-purple-800 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-colors duration-200">
-                <RefreshCw
-                  className={`w-5 h-5 ${isLoading ? "animate-spin" : ""}`}
-                />
-                Refresh
-              </button>
-            </motion.div>
-          </div>
+  return (
+    <div
+      className="dashboard-shell min-h-screen text-slate-100"
+      style={shellStyle}
+    >
+      <div className="dashboard-glow dashboard-glow-one" />
+      <div className="dashboard-glow dashboard-glow-two" />
+
+      <header
+        className={`topbar rounded-[28px] border border-white/10 bg-slate-900/70 p-4 shadow-[0_20px_80px_rgba(15,23,42,0.7)] backdrop-blur-xl sm:p-5 ${
+          isScrolled ? "header-scrolled" : ""
+        }`}
+      >
+        <Header />
+
+        <div className="mt-6">
+          <HeaderGrid
+            totalMarketCap={totalMarketCap}
+            gainers={gainers}
+            losers={losers}
+          />
         </div>
 
-        <div className="flex-1 overflow-y-auto no-scrollbar container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.7 }}
+          className="mt-5 flex flex-col gap-3 lg:flex-row lg:items-center"
+        >
+          <div className="flex-1">
+            <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+          </div>
+
+          <div className="flex items-center gap-3">
+            <FilterSort
+              sortBy={sortBy}
+              sortOrder={sortOrder}
+              onSortChange={setSortBy}
+              onOrderChange={setSortOrder}
+            />
+
+            <button className="premium-button flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white sm:px-5">
+              <RefreshCw
+                className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`}
+              />
+              Refresh
+            </button>
+          </div>
+        </motion.div>
+      </header>
+
+      <div className="dashboard-content relative z-10 mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
+        <main>
           {isError && <ErrorComponent isError={isError} />}
+
           {isLoading && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 py-4">
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((_, i) => (
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
+              {[1, 2, 3, 4, 5, 6, 7, 8].map((_, i) => (
                 <Card_Shimmer key={i} />
               ))}
             </div>
           )}
+
           {!isLoading && (
             <motion.div
               variants={parentVariants}
-              initial={"hidden"}
-              animate={"visible"}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 py-4"
+              initial="hidden"
+              animate="visible"
+              className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4"
             >
               {filteredData.map((coin, i) => (
-                <motion.div variants={childVariants} key={i}>
-                  <CryptoCard key={coin.coinId} coin={coin} />
+                <motion.div variants={childVariants} key={coin.coinId || i}>
+                  <CryptoCard coin={coin} />
                 </motion.div>
               ))}
             </motion.div>
           )}
+
           {!isLoading && filteredData.length === 0 && !isError && (
-            <div className="text-center py-12">
-              <p className="text-gray-400 text-lg">
+            <div className="mt-8 rounded-2xl border border-slate-700 bg-slate-900/50 px-6 py-12 text-center shadow-2xl shadow-slate-950/30 backdrop-blur-sm">
+              <p className="text-lg font-medium text-slate-200">
                 No cryptocurrencies found matching your search.
               </p>
             </div>
           )}
-        </div>
+        </main>
       </div>
 
       {lastUpdated && <LastUpdate lastUpdated={lastUpdated} />}
-    </>
+    </div>
   );
 }
 

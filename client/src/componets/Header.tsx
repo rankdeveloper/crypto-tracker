@@ -1,29 +1,34 @@
 import { BarChart3 } from "lucide-react";
 import { motion } from "framer-motion";
+
 export default function Header() {
   return (
-    <div className="text-center sm:mb-3 md:mb-4 xl:mb-8">
+    <div className="text-center">
       <motion.div
-        initial={{ opacity: 0, y: -50 }}
+        initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, type: "keyframes", stiffness: 100 }}
-        className="flex items-center justify-center gap-3 sm:mb-2 lg:mb-2 mb-4"
+        transition={{ duration: 0.6 }}
+        className="mb-3 flex items-center justify-center gap-3"
       >
-        <BarChart3 className="w-10 h-10 text-purple-400" />
-        <h1 className="text-4xl font-bold text-white">Crypto Tracker</h1>
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-violet-500/10 ring-1 ring-inset ring-violet-500/20">
+          <BarChart3 className="h-6 w-6 text-violet-300" />
+        </div>
+
+        <div>
+          <div className="header-pill mb-1">LIVE MARKET</div>
+          <h1 className="text-3xl font-black tracking-tight text-white sm:text-4xl">
+            Crypto Tracker
+          </h1>
+        </div>
       </motion.div>
+
       <motion.p
-        initial={{ opacity: 0, y: -20 }}
+        initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{
-          delay: 0.5,
-          duration: 1,
-          type: "keyframes",
-          stiffness: 100,
-        }}
-        className="text-gray-400 text-lg"
+        transition={{ delay: 0.2, duration: 0.6 }}
+        className="text-sm uppercase tracking-[0.22em] text-slate-400"
       >
-        Real-time cryptocurrency market data
+        Real-time market intelligence
       </motion.p>
     </div>
   );
