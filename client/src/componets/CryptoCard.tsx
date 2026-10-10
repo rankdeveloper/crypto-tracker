@@ -7,12 +7,12 @@ type CryptoCardProps = {
 };
 
 const CryptoCard: React.FC<CryptoCardProps> = ({ coin }) => {
-  const isPositive = coin.priceChange24h > 0;
+  const isPositive = coin?.priceChange24h > 0;
 
   const formatPrice = (price: number) => {
-    if (price < 0.01) return `$${price.toFixed(6)}`;
-    if (price < 1) return `$${price.toFixed(4)}`;
-    return `$${price.toFixed(2)}`;
+    if (price < 0.01) return `$${price?.toFixed(6)}`;
+    if (price < 1) return `$${price?.toFixed(4)}`;
+    return `$${price?.toFixed(2)}`;
   };
 
   const formatMarketCap = (marketCap: number) => {
@@ -30,24 +30,24 @@ const CryptoCard: React.FC<CryptoCardProps> = ({ coin }) => {
         <div className="flex items-center gap-3">
           <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-slate-700 bg-slate-800/80">
             <img
-              src={coin.image}
-              alt={coin.name}
+              src={coin?.image}
+              alt={coin?.name}
               className="h-8 w-8 rounded-full object-cover"
             />
           </div>
 
           <div className="min-w-0">
             <h3 className="truncate text-base font-semibold text-white">
-              {coin.name}
+              {coin?.name}
             </h3>
             <p className="text-xs font-medium uppercase tracking-[0.18em] text-slate-400">
-              {coin.symbol}
+              {coin?.symbol}
             </p>
           </div>
         </div>
 
         <div className="rounded-full border border-slate-700 bg-slate-800/70 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-300">
-          #{coin.rank}
+          #{coin?.rank}
         </div>
       </div>
 
@@ -57,7 +57,7 @@ const CryptoCard: React.FC<CryptoCardProps> = ({ coin }) => {
             Price
           </p>
           <p className="text-3xl font-bold tracking-tight text-white">
-            {formatPrice(coin.price)}
+            {formatPrice(coin?.price)}
           </p>
         </div>
 
@@ -74,7 +74,7 @@ const CryptoCard: React.FC<CryptoCardProps> = ({ coin }) => {
             ) : (
               <TrendingDown className="h-4 w-4" />
             )}
-            {coin.priceChange24h.toFixed(2)}%
+            {coin?.priceChange24h?.toFixed(2)}%
           </div>
           <span className="text-xs uppercase tracking-[0.18em] text-slate-500">
             24h
@@ -86,14 +86,14 @@ const CryptoCard: React.FC<CryptoCardProps> = ({ coin }) => {
             Market Cap
           </p>
           <p className="text-lg font-semibold text-slate-100">
-            {formatMarketCap(coin.marketCap)}
+            {formatMarketCap(coin?.marketCap)}
           </p>
         </div>
 
         <div className="flex items-center justify-between border-t border-slate-800 pt-3 text-xs text-slate-400">
           <span>Updated</span>
           <span>
-            {new Date(coin.lastUpdated).toLocaleTimeString([], {
+            {new Date(coin?.lastUpdated).toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
             })}
